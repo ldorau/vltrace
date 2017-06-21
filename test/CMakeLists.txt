@@ -85,16 +85,41 @@ else ()
 
 	endforeach(STR_LEN)
 
-	add_test(NAME "126-syscalls-string-arguments"
+	add_test(NAME "126-syscalls-string-arguments-126"
 			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 8 126)
-	add_test(NAME "382-syscalls-string-arguments"
+	add_test(NAME "126-syscalls-string-arguments-382"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 8 382)
+	add_test(NAME "126-syscalls-string-arguments-765"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 8 765)
+	add_test(NAME "126-syscalls-string-arguments-1148"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 8 1148)
+	add_test(NAME "126-syscalls-string-arguments-1531"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 8 1531)
+
+	add_test(NAME "382-syscalls-string-arguments-382"
 			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 9 382)
-	add_test(NAME "765-syscalls-string-arguments"
+	add_test(NAME "382-syscalls-string-arguments-765"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 9 765)
+	add_test(NAME "382-syscalls-string-arguments-1148"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 9 1148)
+	add_test(NAME "382-syscalls-string-arguments-1531"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 9 1531)
+
+	add_test(NAME "765-syscalls-string-arguments-765"
 			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 10 765)
-	add_test(NAME "1148-syscalls-string-arguments"
+	add_test(NAME "765-syscalls-string-arguments-1148"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 10 1148)
+	add_test(NAME "765-syscalls-string-arguments-1531"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 10 1531)
+
+	add_test(NAME "1148-syscalls-string-arguments-1148"
 			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 11 1148)
-	add_test(NAME "1531-syscalls-string-arguments"
+	add_test(NAME "1148-syscalls-string-arguments-1531"
+			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 11 1531)
+
+	add_test(NAME "1531-syscalls-string-arguments-1531"
 			COMMAND ${TEST_DIR}/test-match ${TEST_APP} 12 1531)
+
 	add_test(NAME "1531-syscalls-string-arguments-with-fork"
 			COMMAND ${TEST_DIR}/test-match -f ${TEST_APP} 13 1531)
 	add_test(NAME "1531-syscalls-string-arguments-with-double-fork"
