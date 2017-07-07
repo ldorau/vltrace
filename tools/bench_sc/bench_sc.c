@@ -54,20 +54,23 @@ typedef void (*tx_t)();
 static void
 open_close()
 {
-	int fd;
+	int fd_in, fd_out;
 	int x;
 
-	fd = open("/dev/null", O_RDONLY);
-	x = read(fd, &x, sizeof(x));
-	x = write(fd, &x, sizeof(x));
-	(void) close(fd);
+	fd_in = open("/dev/zero", O_RDONLY);
+	x = read(fd_in, &x, sizeof(x));
+	(void) close(fd_in);
+
+	fd_out = open("/dev/null", O_WRONLY);
+	x = write(fd_out, &x, sizeof(x));
+	(void) close(fd_out);
 }
 
 /*
  * loop_tx -- run and measure tested usecase
  */
 static void
-loop_tx(char *name, tx_t tx_f, uint64_t qty, FILE *f)
+loop_tx(char *name, tx_t tx_f, uint64_t qty, FILE *file)
 {
 	uint64_t i, tu_start, tu_end, delta;
 	struct timeval tv_start, tv_end;
@@ -82,7 +85,7 @@ loop_tx(char *name, tx_t tx_f, uint64_t qty, FILE *f)
 
 	gettimeofday(&tv_end, NULL);
 
-	if (f == NULL)
+	if (file == NULL)
 		return;
 
 	tu_start = tv_start.tv_sec * 1000000 + tv_start.tv_usec;
@@ -91,7 +94,7 @@ loop_tx(char *name, tx_t tx_f, uint64_t qty, FILE *f)
 	delta = (tu_end - tu_start);
 	delta *= 1000;
 
-	fprintf(stderr, "%s: iteration time: %ld nsec\n", name,  delta / qty);
+	fprintf(file, "%s: iteration time: %ld nsec\n", name, delta / qty);
 }
 
 int
@@ -112,9 +115,9 @@ main(int argc, char *argv[])
 	}
 
 	/* WARM-UP */
-	loop_tx("open_read_write_close",
+	loop_tx("Warm-up",
 			open_close,  iters_qty / 10, NULL);
-	loop_tx(">>> open_read_write_close ",
+	loop_tx(">>> open-read-close-open-write-close",
 			open_close,  iters_qty, stderr);
 
 	return 0;
