@@ -82,14 +82,17 @@ fi
 TEST_DIR=$(dirname $0)
 [ "$TEST_DIR" == "." ] && TEST_DIR=$(pwd)
 
-BIN2TXT=$(dirname $TEST_DIR)/tools/bin2txt/bin2txt.py
-
 FUNCT=$TEST_DIR/helper_functions.sh
 [ ! -f $FUNCT ] \
 	&& echo "Error: missing file: $FUNCT" \
 	&& exit 1
 
 source $FUNCT
+
+BIN2TXT=$(dirname $TEST_DIR)/tools/bin2txt/bin2txt.py
+
+[ "$COVERAGE" == "1" ] && \
+	BIN2TXT="$(which python3) $(which coverage) run -a --rcfile=$TEST_DIR/.coveragerc --source=$PYTHON_SOURCE $BIN2TXT"
 
 PATTERN_START="---------------- close 0x0000000012345678"
 PATTERN_END="---------------- close 0x0000000087654321"
